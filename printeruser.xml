@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+typedef int[1,6] Users;
+chan print[Users];
+</declaration>
+	<template>
+		<name x="5" y="5">Printer</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id0" x="-612" y="-306">
+			<name x="-622" y="-340">Idle</name>
+		</location>
+		<location id="id1" x="-476" y="-306">
+			<name x="-486" y="-340">Printing</name>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<nail x="-476" y="-272"/>
+			<nail x="-612" y="-272"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="select" x="-579" y="-340">u : Users</label>
+			<label kind="synchronisation" x="-578" y="-323">print[u]?</label>
+		</transition>
+	</template>
+	<template>
+		<name>User</name>
+		<parameter>Users &amp;id</parameter>
+		<location id="id2" x="-646" y="-374">
+			<name x="-656" y="-408">User</name>
+		</location>
+		<init ref="id2"/>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-628" y="-391">print[id]!</label>
+			<nail x="-544" y="-374"/>
+			<nail x="-544" y="-340"/>
+			<nail x="-612" y="-340"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+U(Users id) = User(id);
+// List one or more processes to be composed into a system.
+system U, Printer;
+</system>
+	<queries>
+		<query>
+			<formula></formula>
+			<comment></comment>
+		</query>
+	</queries>
+</nta>
